@@ -1,8 +1,17 @@
-# React + Vite
+Things to learn in recoil------
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Basics:----
 
-Currently, two official plugins are available:
+1. atoms✅
+2. selectors✅
+3. Asynchronous Data Queries✅
+4. useRecoilState✅
+5. useRecoilValue✅
+6. useSetRecoilState✅
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Advance:------
+
+1. atomFamily
+2. selectorFamily
+3. useRecoilStateLoadable
+4. useRecoilValueLoadable
