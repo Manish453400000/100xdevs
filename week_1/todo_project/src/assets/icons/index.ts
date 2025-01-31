@@ -8,7 +8,40 @@ import game from './console.png';
 import playing from './playing.png';
 import nap from './relaxing.png'
 
-const taskIcon = [coofee, code, dinner, training, reading, game, playing, nap]
+const taskIcon = [
+  {
+    lebel: "coofee",
+    png: coofee
+  },
+  {
+    lebel: "code",
+    png: code
+  },
+  {
+    lebel: "training",
+    png: training
+  },
+  {
+    lebel: "dinner",
+    png: dinner
+  },
+  {
+    lebel: "reading",
+    png: reading
+  },
+  {
+    lebel: "game",
+    png: game
+  },
+  {
+    lebel: "playing",
+    png: playing,
+  },
+  {
+    lebel: "rest",
+    png: nap
+  }
+]
 
 export { google, taskIcon }
 

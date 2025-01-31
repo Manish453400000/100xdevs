@@ -13,7 +13,7 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
+app.get("/v1/api/", (req, res) => {
   res.send("hello form backend");
 });
 
