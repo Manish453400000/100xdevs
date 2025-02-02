@@ -8,37 +8,46 @@ import game from './console.png';
 import playing from './playing.png';
 import nap from './relaxing.png'
 
+// "CODE",
+//         "COFFEE",
+//         "MEAL",
+//         "TRAINING",
+//         "STUDY",
+//         "GAME",
+//         "SPORTS",
+//         "REST"
+
 const taskIcon = [
   {
-    lebel: "coofee",
+    lebel: "COFFEE",
     png: coofee
   },
   {
-    lebel: "code",
+    lebel: "CODE",
     png: code
   },
   {
-    lebel: "training",
+    lebel: "TRAINING",
     png: training
   },
   {
-    lebel: "dinner",
+    lebel: "MEAL",
     png: dinner
   },
   {
-    lebel: "reading",
+    lebel: "STUDY",
     png: reading
   },
   {
-    lebel: "game",
+    lebel: "GAME",
     png: game
   },
   {
-    lebel: "playing",
+    lebel: "SPORTS",
     png: playing,
   },
   {
-    lebel: "rest",
+    lebel: "REST",
     png: nap
   }
 ]

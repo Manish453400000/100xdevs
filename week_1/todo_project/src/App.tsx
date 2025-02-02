@@ -1,20 +1,33 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { taskIcon, training } from './assets/icons'
+import { taskIcon } from './assets/icons'
 import axios from 'axios';
+import { useRecoilCallback, useRecoilValue } from 'recoil';
+import { allTodosState, todoAtomFamily } from './store/atoms/todoAtom';
 
 function App() {
   const [showTodoCreator, setShowTodoCreator] = useState(false);
 
+  const allTodos = useRecoilValue(allTodosState);
+  const initializeTodos = useRecoilCallback(({set}) => () => {
+    allTodos.foreach((todo:any) => set(todoAtomFamily(todo._id), todo))
+  })
+
+  // useEffect(() => {
+  //   initializeTodos();
+  // },[allTodos])
+
   useEffect(() => {
-    axios.get("/api/todo")
+    axios.get("/api/todos")
     .then((data) => {
-      console.log(data)
+      // setTodos(data.data.data)
+      console.log(data.data.data)
     })
-    .catch((error) => {
+    .catch((error) => { 
       console.log(error)
     })
   },[])
+
  
   const closeFunc = () => setShowTodoCreator(false);
   return (
@@ -22,8 +35,7 @@ function App() {
       <div className='w-[30rem] p-[20px] bg-[#4c5044] rounded-md text-white flex flex-col items-center'>
         <h3 className='text-[20px] font-bold'>Todos</h3>
         <div className='todo-list flex flex-col w-full py-[15px] gap-[10px]'>
-          <Todo />
-          <Todo />
+          allTodos
         </div>
         <div>
           <button 
@@ -40,14 +52,15 @@ function App() {
   )
 }
 
-const Todo = () => {
+const Todo = ({todo}:any) => {
+  
   return(
-    <div className='flex justify-between items-center bg-[#66695e] w-full py-[5px] rounded-md px-[10px]'>
+    <div className='flex justify-between items-center bg-[#66695e] w-full py-[5px] rounded-md px-[10px]' key={todo._id}>
       <div className='flex gap-[10px] items-center'>
-        <TodoIcon item={training} />
+        <TodoIcon lebel={todo.lebel} />
         <div className='flex flex-col'>
-          <span className='text-[14px] font-bold text-[#f2ffea] '>Go to gym</span>
-          <span className='text-[12px] text-[#bdbdbd]'>Hit the gym before 09:00 </span>
+          <span className='text-[14px] font-bold text-[#f2ffea] '>{todo.title}</span>
+          <span className='text-[12px] text-[#bdbdbd]'>{todo.description}</span>
         </div>
       </div>
       <div className=' p-[5px] cursor-pointer'>
@@ -56,18 +69,29 @@ const Todo = () => {
     </div>
   )
 }
+const TodoIcon = ({lebel}:any) => {
 
-const TodoIcon = ({item}:any) => {
+  const[icon, setIcon] = useState({
+    lebel: '',
+    png: ''
+  })
+  useEffect(() => {
+    const icon:any = taskIcon.find(icon => icon.lebel == lebel)
+    if(icon){
+      setIcon(icon)
+    }
+    
+  },[lebel])
   return (
     <div className='w-[45px] cursor-pointer rounded-full aspect-square bg-[#ccff12] flex justify-center items-center'>
-      <img src={item} alt="" className='w-[60%]' />
+      <img src={icon.png} alt="" className='w-[60%]' />
     </div>
   )
 } 
 
 
 const TodoCreator = ({func}: any) => {
-  const [selectedLebel, setSelectedLebel] = useState('code')
+  const [selectedLebel, setSelectedLebel] = useState('CODE')
   const [todoTitle, setTodoTitle] = useState('')
   const [todoDes, setTodoDes] = useState('')
 
@@ -77,7 +101,13 @@ const TodoCreator = ({func}: any) => {
       description: todoDes,
       lebel: selectedLebel,
     }
-    console.log(todo);
+
+    axios.post('/api/create', todo)
+    .then((res) => {
+      console.log(res);
+      
+    }).catch(e => console.log(e))
+
     func();
   }
   return(
@@ -100,7 +130,7 @@ const TodoCreator = ({func}: any) => {
                 onClick={() => setSelectedLebel(item?.lebel)}
                 >
                   <img src={item?.png} alt="" className='w-[60%]' />
-                  <div className={`bg-[#221f1f59] text-[white] flex justify-center items-center text-[25px] font-bold w-full h-full absolute top-0 left-0 ${selectedLebel == item?.lebel ? "":"hidden"}`}>
+                  <div className={`bg-[#1b1b1b96] text-[white] flex justify-center items-center text-[25px] font-bold w-full h-full absolute top-0 left-0 ${selectedLebel == item?.lebel ? "":"hidden"}`}>
                     <i className="fa-solid fa-check"></i>
                   </div>
                 </div>

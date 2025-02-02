@@ -8,7 +8,7 @@ import {
 const todoRouter = Router();
 
 todoRouter.route("/create").post(createTodo);
-todoRouter.route("/todo").get(getAllTodo);
+todoRouter.route("/todos").get(getAllTodo);
 todoRouter.route("/delete").get(deleteTodo);
 todoRouter.route("/filter").get(() => {});
 
